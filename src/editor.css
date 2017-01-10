@@ -1,0 +1,204 @@
+body {
+    font-family: system-ui, -apple-system, 'Segoe UI', 'Roboto', sans-serif;
+    background: #f2f2f2;
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    display: flex;
+    color: white;
+    background: #ff0046;
+    box-sizing: border-box;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+}
+
+header h1 {
+    flex: 1 0 auto;
+    line-height: 56px;
+    font-size: 24px;
+    letter-spacing: 0.005em;
+    font-weight: 500;
+    padding: 0 16px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#menuButton {
+    display: inline-block;
+    background: transparent;
+    line-height: 56px;
+    padding: 0;
+    width: 48px;
+    text-align: center;
+    border: 0 none;
+}
+
+#menuButton:hover,
+#menuButton:active,
+#menuButton[aria-expanded="true"] {
+    background: #ff3d72;
+}
+
+#menuButton::after {
+    display: none;
+}
+
+#menuButton svg {
+    height: 24px;
+    width: 24px;
+    vertical-align: middle;
+    fill: white;
+}
+
+menu {
+    padding: 8px 0;
+}
+
+menuitem {
+    color: #333333;
+    background: white;
+    padding: 0 16px;
+    line-height: 48px;
+    font-family: system-ui, -apple-system, 'Segoe UI', 'Roboto', sans-serif;
+    font-size: 16px;
+}
+
+menuitem svg {
+    display: none;
+}
+
+menuitem:not([disabled]):hover,
+menuitem:not([disabled]):focus,
+menuitem:not([disabled]):active {
+    background: #ffbdcf;
+    color: black;
+}
+
+dl {
+    margin: 1em;
+    columns: 3 260px;
+    column-gap: 2em;
+}
+
+dl div {
+    width: 260px;
+    display: flex;
+    margin-bottom: 8px;
+    height: 40px;
+}
+
+dt {
+    flex: 1 1 auto;
+    font-weight: 400;
+    line-height: 40px;
+}
+
+dd {
+    display: inline-flex;
+    width: 150px;
+    border-bottom: 2px solid #eeeeee;
+    margin-left: 0;
+    flex: 0 0 150px;
+    align-items: center;
+}
+
+dd:focus-within {
+    border-color: #ff0046;
+}
+
+input {
+    border: 0 none;
+    background: transparent;
+    vertical-align: middle;
+    color: #333333;
+    font-family: system-ui, -apple-system, 'Segoe UI', 'Roboto', sans-serif;
+    font-weight: 300;
+}
+
+input:focus {
+    outline: none;
+    color: black;
+}
+
+input {
+    flex: 1 1 auto;
+    font-size: 1em;
+    text-align: right;
+}
+
+input[type="color"] {
+    flex: 0 0 1.5em;
+    height: 1.5em;
+    width: 1.5em;
+    margin-left: 0.5em;
+    padding: 0;
+    -webkit-appearance: none;
+}
+
+input::-moz-focus-inner {
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type="color"]::-moz-color-swatch {
+    border: 0 none;
+    border-radius: 5px;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: 0 none;
+    border-radius: 5px;
+}
+
+input:not([value^="#"]) + input[type="color"] {
+    display: none;
+}
+
+@media (min-width: 600px) {
+    #menuButton {
+        display: none;
+    }
+
+    menu {
+        display: block !important;
+        transform: none !important;
+        border: 0 none !important;
+    }
+
+    menuitem {
+        display: inline-block;
+        background: transparent;
+        line-height: 56px;
+        padding: 0;
+        width: 48px;
+        text-align: center;
+        color: inherit;
+    }
+
+    menuitem::after {
+        display: none;
+    }
+
+    menuitem:not([disabled]):focus {
+        background: transparent;
+        color: white;
+    }
+
+    menuitem:not([disabled]):hover,
+    menuitem:not([disabled]):active {
+        background: #ff3d72;
+        color: white;
+    }
+
+    menuitem svg {
+        display: inline-block;
+        height: 24px;
+        width: 24px;
+        vertical-align: middle;
+        fill: currentColor;
+    }
+}

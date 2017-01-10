@@ -1,0 +1,19 @@
+{
+  "name": "css-george",
+  "version": "1.0.0-rc.1",
+  "description": "Runtime editor for variables in annotated CSS files.",
+  "main": "dist/george.js",
+  "scripts": {
+    "build": "html-inline -i src/editor.html -b src | htmlmin | html2js -t src/main.js -p '<!-- inline:HTML -->' | uglifyjs - -c -o dist/george.js"
+  },
+  "author": "Darryl Pogue <darryl@dpogue.ca>",
+  "license": "MIT",
+  "devDependencies": {
+    "ay-menu-button": "^1.0.0",
+    "html-inline": "^1.2.0",
+    "html2js-bin": "^1.0.0",
+    "htmlmin": "0.0.7",
+    "less": "^2.7.1",
+    "uglify-js": "^2.7.5"
+  }
+}
