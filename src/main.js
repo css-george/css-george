@@ -72,14 +72,24 @@ function parseStylesheet(sheetText) {
 }
 
 function parseMappingFile(mapUrl) {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && editor && !editor.closed) {
-            editor.postMessage(JSON.parse(xhr.responseText), window.location.origin);
+    try {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && editor && !editor.closed) {
+                editor.postMessage(JSON.parse(xhr.responseText), window.location.origin);
+            }
+        };
+        xhr.open('GET', mapUrl, true);
+        xhr.send();
+    } catch(e) {
+        // If it's a data URI, we can handle it ourselves
+        var split = mapUrl.split(',');
+        if (split[0].match(/^data:/)) {
+            editor.postMessage(JSON.parse(atob(split[1])), window.location.origin);
+        } else {
+            throw e;
         }
-    };
-    xhr.open('GET', mapUrl, true);
-    xhr.send();
+    }
 }
 
 function updateVariables(updates) {
