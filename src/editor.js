@@ -110,6 +110,13 @@ function bindTemplate(item) {
                     el.textContent = value;
                 } else {
                     el.setAttribute(attr, value);
+
+                    // Workaround for weird Safari color input bug:
+                    // https://bugs.webkit.org/show_bug.cgi?id=166930
+                    if (attr === 'value') {
+                        el.value = '#000000';
+                        el.value = value;
+                    }
                 }
             });
     }
