@@ -3,6 +3,10 @@
   "version": "1.0.0-rc.1",
   "description": "Runtime editor for variables in annotated CSS files.",
   "main": "dist/george.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/css-george/css-george"
+  },
   "scripts": {
     "build": "html-inline -i src/editor.html -b src | htmlmin | html2js -t src/main.js -p '<!-- inline:HTML -->' | uglifyjs - -c -o dist/george.js"
   },
