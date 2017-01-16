@@ -6,8 +6,8 @@ stylepad.setAttribute('id', styleID);
 stylepad.appendChild(document.createTextNode(':root { }'));
 document.head.appendChild(stylepad);
 
-document.addEventListener('keypress', function(evt) {
-    if ((evt.code === 'Backquote' && evt.shiftKey) || (evt.keyCode === 126 && evt.shiftKey)) {
+document.addEventListener('keydown', function(evt) {
+    if ((evt.code === 'Backquote' && evt.shiftKey) || (evt.code === 'IntlBackslash' && evt.shiftKey) || (evt.keyCode === 126 && evt.shiftKey)) {
         if (editor && !editor.closed) {
             editor.focus();
         } else {
