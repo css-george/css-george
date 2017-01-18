@@ -1,6 +1,6 @@
 {
   "name": "css-george",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Runtime editor for variables in annotated CSS files.",
   "main": "dist/george.js",
   "repository": {
