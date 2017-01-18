@@ -23,10 +23,8 @@ window.addEventListener('message', function(evt) {
     }
 
     if (evt.data == '__INIT__') {
-        if (editor && !editor.closed) {
-            editor.postMessage(knownVariables, window.location.origin);
-        }
-
+        editor = evt.source;
+        editor.postMessage(knownVariables, window.location.origin);
     } else {
         updateVariables(evt.data);
     }
@@ -36,16 +34,6 @@ window.addEventListener('message', function(evt) {
 function openEditor() {
     var height = window.innerHeight - 100;
     editor = window.open(url, '', 'menubar=no,toolbar=no,location=no,status=no,width=320,height='+height);
-
-    if (!editor) {
-        console.error('[george] Failed to open editor window');
-        return;
-    }
-
-    editor.addEventListener('beforeunload', function(evt) {
-        editor = null;
-    });
-
 
     if (Object.keys(knownVariables).length === 0) {
         var i;
@@ -59,6 +47,16 @@ function openEditor() {
             fetchStylesheet(links[i].href);
         }
     }
+
+
+    if (!editor) {
+        console.error('[george] Failed to open editor window');
+        return;
+    }
+
+    editor.addEventListener('beforeunload', function(evt) {
+        editor = null;
+    });
 }
 
 function fetchStylesheet(cssUrl) {
