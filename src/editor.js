@@ -13,7 +13,12 @@ window.opener.addEventListener('beforeunload', function(evt) {
 
 
 window.addEventListener('load', function() {
-    MenuButton(document.getElementById('menuButton'));
+    window.opener.postMessage('__INIT__', origin || '*');
+
+    var btn = document.getElementById('menuButton');
+    if (btn) {
+        MenuButton(btn);
+    }
 });
 
 

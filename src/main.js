@@ -1,5 +1,6 @@
 var editor = null;
 var styleID = '__GEORGE__Stylepad';
+var knownVariables = Object.create(null);
 
 var stylepad = document.createElement('style');
 stylepad.setAttribute('id', styleID);
@@ -21,7 +22,14 @@ window.addEventListener('message', function(evt) {
         return;
     }
 
-    updateVariables(evt.data);
+    if (evt.data == '__INIT__') {
+        if (editor && !editor.closed) {
+            editor.postMessage(knownVariables, window.location.origin);
+        }
+
+    } else {
+        updateVariables(evt.data);
+    }
 });
 
 
@@ -38,9 +46,9 @@ function openEditor() {
         editor = null;
     });
 
-    editor.addEventListener('load', function(evt) {
-        var i;
 
+    if (Object.keys(knownVariables).length === 0) {
+        var i;
         var inline = document.querySelectorAll('style:not(#' + styleID + ')');
         for (i = 0; i < inline.length; i++) {
             parseStylesheet(inline[i].innerHTML);
@@ -50,7 +58,7 @@ function openEditor() {
         for (i = 0; i < links.length; i++) {
             fetchStylesheet(links[i].href);
         }
-    });
+    }
 }
 
 function fetchStylesheet(cssUrl) {
@@ -75,8 +83,16 @@ function parseMappingFile(mapUrl) {
     try {
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && editor && !editor.closed) {
-                editor.postMessage(JSON.parse(xhr.responseText), window.location.origin);
+            if (xhr.readyState === 4) {
+                var variables = JSON.parse(xhr.responseText);
+
+                Object.keys(variables).forEach(function(varname) {
+                    knownVariables[varname] = variables[varname];
+                });
+
+                if (editor && !editor.closed) {
+                    editor.postMessage(variables, window.location.origin);
+                }
             }
         };
         xhr.open('GET', mapUrl, true);
@@ -85,7 +101,15 @@ function parseMappingFile(mapUrl) {
         // If it's a data URI, we can handle it ourselves
         var split = mapUrl.split(',');
         if (split[0].match(/^data:/)) {
-            editor.postMessage(JSON.parse(atob(split[1])), window.location.origin);
+            var variables = JSON.parse(atob(split[1]));
+
+            Object.keys(variables).forEach(function(varname) {
+                knownVariables[varname] = variables[varname];
+            });
+
+            if (editor && !editor.closed) {
+                editor.postMessage(variables, window.location.origin);
+            }
         } else {
             throw e;
         }
@@ -96,6 +120,7 @@ function updateVariables(updates) {
     var rule = stylepad.sheet.cssRules[0];
 
     Object.keys(updates).map(function(key) {
+        knownVariables[key] = updates[key];
         rule.style.setProperty('--' + key, updates[key]);
     });
 }
